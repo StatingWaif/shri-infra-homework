@@ -1,8 +1,6 @@
 name: test
 
-on:
-  pull_request:
-    types: [opened, synchronize]
+on: [workflow_dispatch]
 
 jobs:
   lint:
@@ -24,3 +22,9 @@ jobs:
         run: npm ci
       - name: test
         run: npm run test
+
+  release:
+    needs: [lint, test]
+    steps:
+      - name: create new branch
+        run: git checkout -b ${{ github.run_number }}
