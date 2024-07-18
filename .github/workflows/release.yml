@@ -40,11 +40,13 @@ jobs:
     runs-on: ubuntu-latest
     needs: [lint, test]
     steps:
+      - name: ls
+        run: ls
       - name: checkout
         uses: actions/checkout@v4
-
-      - name: npm
-        run: npm ci
-
+      - name: ls
+        run: ls
       - name: build image
         run: docker build -t asfs .
+      - name: ls
+        run: ls
