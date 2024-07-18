@@ -1,0 +1,38 @@
+name: test
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  install-packages:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v4
+
+      - name: cache node modules
+        uses: actions/cache@v4
+        id: cache-node-modules
+        with:
+          path: node_modules
+          key: ${{runner.os}}-node-modules-${{hashFiles('**/package.lock.json')}}
+          restore-keys: |
+            ${{runner.os}}-node-modules
+      - name: install dependencies
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
+        run: npm ci
+
+  lint:
+    needs: install-packages
+    runs-on: ubuntu-latest
+    steps:
+      - name: lint
+        run: npm run lint
+
+  test:
+    needs: install-packages
+    runs-on: ubuntu-latest
+    steps:
+      - name: test
+        run: npm run test
