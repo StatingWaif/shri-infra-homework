@@ -39,6 +39,8 @@ jobs:
   docker_build:
     runs-on: ubuntu-latest
     needs: [lint, test]
-    step:
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
       - name: build image
         run: docker build -t asfs .
