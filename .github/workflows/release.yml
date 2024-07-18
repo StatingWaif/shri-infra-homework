@@ -30,4 +30,6 @@ jobs:
       - name: checkout
         uses: actions/checkout@v4
       - name: create new branch
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: git checkout -b releases/${{ github.run_number }}
