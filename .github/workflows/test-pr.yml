@@ -30,6 +30,8 @@ jobs:
     # needs: install-packages
     runs-on: ubuntu-latest
     steps:
+      - name: checkout
+        uses: actions/checkout@v4
       - name: npm
         run: npm ci
       - name: lint
@@ -39,6 +41,8 @@ jobs:
     # needs: install-packages
     runs-on: ubuntu-latest
     steps:
+      - name: checkout
+        uses: actions/checkout@v4
       - name: npm
         run: npm ci
       - name: test
