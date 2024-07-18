@@ -27,6 +27,8 @@ jobs:
     needs: install-packages
     runs-on: ubuntu-latest
     steps:
+      - name: checkout repo
+        uses: actions/checkout@v4
       - name: lint
         run: npm run lint
 
@@ -34,5 +36,7 @@ jobs:
     needs: install-packages
     runs-on: ubuntu-latest
     steps:
+      - name: checkout repo
+        uses: actions/checkout@v4
       - name: test
         run: npm run test
