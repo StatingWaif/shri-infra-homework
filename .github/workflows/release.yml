@@ -42,5 +42,9 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v4
+
+      - name: npm
+        run: npm ci
+
       - name: build image
         run: docker build -t asfs .
