@@ -58,7 +58,7 @@ jobs:
         uses: actions/checkout@v4
       - name: create new branch
         run: |
-          git tag latest_commit main -a ${{ github.run_number }}
+          git tag -m ${{ github.run_number }} latest_commit
           git push origin --tags
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
