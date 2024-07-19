@@ -48,7 +48,7 @@ jobs:
         run: docker build -t cr.yandex/crpjke8raekf9lld1bh2/app:${{ github.run_number }} -t cr.yandex/crpjke8raekf9lld1bh2/app:${{ github.run_number }}_latest .
 
       - name: add image to registry
-        run: docker push cr.yandex/crpjke8raekf9lld1bh2/app:${{ github.run_number }}
+        run: docker push --all-tags cr.yandex/crpjke8raekf9lld1bh2/app:${{ github.run_number }}
 
   create_tag:
     runs-on: ubuntu-latest
