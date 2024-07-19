@@ -66,3 +66,13 @@ jobs:
           git push origin --tags
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  create_issue:
+    runs-on: ubuntu-latest
+    needs: [lint, test]
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+        run: gh issue create --title "v.${{ github.run_number }}" --body "date, author, ${{ github.run_number }}, cr.yandex/crpjke8raekf9lld1bh2/app:${{ github.run_number }}"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
