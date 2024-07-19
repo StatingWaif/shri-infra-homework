@@ -43,10 +43,7 @@ jobs:
       - name: checkout
         uses: actions/checkout@v4
       - name: login
-        run: docker login \
-          --username oauth \
-          --password ${{ secrets.YANDEX_CLOUD_TOKEN }} \
-          cr.yandex
+        run: docker login --username oauth --password ${{ secrets.YANDEX_CLOUD_TOKEN }} cr.yandex
       - name: build image
         run: docker build -t cr.yandex/crpjke8raekf9lld1bh2/app:${{ github.run_number }} -t cr.yandex/crpjke8raekf9lld1bh2/app:${{ github.run_number }}_latest .
 
