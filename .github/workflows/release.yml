@@ -2,11 +2,10 @@ name: release
 
 on:
   workflow_dispatch:
-    inputs:
-      branch:
-        description: "Branch to run the workflow"
-        default: "main"
-        required: true
+    branch:
+      description: "Branch to run the workflow"
+      default: "main"
+      required: true
 
 jobs:
   lint:
