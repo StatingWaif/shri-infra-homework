@@ -76,9 +76,10 @@ jobs:
 
       - name: create issue
         run: |
-          prev_tag=$(git describe --tags --abbrev=0 HEAD^)
+          prev_tag=$(git describe --tags --abbrev=0 HEAD^ || 0)
           commits=$(git log $prev_tag..HEAD --oneline)
           current_date=$(date -u +'%d.%m.%Y')
+
           --body $'date '"$current_date"$'\n
             author: ${{ github.actor }}\n 
             version: ${{ github.run_number }}\n
