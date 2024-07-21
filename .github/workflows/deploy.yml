@@ -44,7 +44,7 @@ jobs:
       - name: ssh_login
         run: |
           ssh-keyscan -H 51.250.39.75 >> ~/.ssh/known_hosts
-          ssh -i /tmp/key viktor@51.250.39.75
+          ssh -i /tmp/key -o StrictHostKeyChecking=no viktor@51.250.39.75
 
       - name: docker_check
         run: sudo docker manifest inspect cr.yandex/crpjke8raekf9lld1bh2/app:${{inputs.version}}_latest
