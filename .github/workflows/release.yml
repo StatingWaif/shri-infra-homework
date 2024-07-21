@@ -77,7 +77,7 @@ jobs:
       - name: create issue
         run: |
           CURRENT_DATE=$(date -u +'%d.%m.%Y')
-          DESCRIPTION=$(git describe --always || echo "No commits to describe")
+          DESCRIPTION=$(git describe --tags --abbrev=0 HEAD^ || echo "No commits to describe")
           gh issue create \
             --title "v.${{ github.run_number }}" \
             --body "\
