@@ -75,6 +75,6 @@ jobs:
         uses: actions/checkout@v4
 
       - name: create issue
-        run: gh issue create --title $'v.${{ github.run_number }}" --body "date \n, author ${{ github.actor }}\n ${{ github.run_number }}\n cr.yandex/crpjke8raekf9lld1bh2/app:${{ github.run_number }}'
+        run: gh issue create --title $'v.${{ github.run_number }}' --body $'date \n, author ${{ github.actor }}\n ${{ github.run_number }}\n cr.yandex/crpjke8raekf9lld1bh2/app:${{ github.run_number }}'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
