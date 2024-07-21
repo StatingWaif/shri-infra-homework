@@ -76,12 +76,11 @@ jobs:
 
       - name: create issue
         run: |
-          current_date=$(date -u +'%d.%m.%Y')
-
+          CURRENT_DATE=$(date -u +'%d.%m.%Y')
           gh issue create \
           --title "v.${{ github.run_number }}"\
           --body " \
-          date: $(current_date) \n \
+          date: $CURRENT_DATE \n \
           version: ${{github.run_number}} \n \
           link: cr.yandex/crpjke8raekf9lld1bh2/app:${{ github.run_number }}\n \
           commits: \n \
