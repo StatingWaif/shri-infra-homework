@@ -62,4 +62,4 @@ jobs:
           fi
 
       - name: docker_start
-        run: sudo docker run -p 3000:3000 cr.yandex/crpjke8raekf9lld1bh2/app:${{inputs.version}}_latest
+        run: sudo docker run -d -p 3000:3000 cr.yandex/crpjke8raekf9lld1bh2/app:${{inputs.version}}_latest
