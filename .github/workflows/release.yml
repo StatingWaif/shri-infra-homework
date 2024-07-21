@@ -77,14 +77,16 @@ jobs:
       - name: create issue
         run: |
           CURRENT_DATE=$(date -u +'%d.%m.%Y')
-          DESCRIPTION=$(git describe --tags --abbrev=0 HEAD^ || echo "No commits to describe")
+          DESCRIPTION=$(git log --oneline || echo "No commits to describe")
           gh issue create \
-            --title "v.${{ github.run_number }}" \
-            --body "\
-            date: $CURRENT_DATE\n\
-            version: ${{github.run_number}}\n\
-            link: cr.yandex/crpjke8raekf9lld1bh2/app:${{ github.run_number }}\n\
-            commits: \n\
-            $DESCRIPTION"
+          --title "v.${{ github.run_number }}" \
+          --body "$(cat <<EOF
+          date: $CURRENT_DATE
+          version: ${{github.run_number}}
+          link: cr.yandex/crpjke8raekf9lld1bh2/app:${{ github.run_number }}
+          commits:
+          $DESCRIPTION
+          EOF
+          )"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
