@@ -57,7 +57,7 @@ jobs:
       - name: docker_stop
         # run: sudo docker stop $(sudo docker ps -aq)
         run: |
-          if [ "$(sudo docker ps -q)" ]; then
+          if [ "$(sudo docker ps -q)" ]; then 
           sudo docker stop $(sudo docker ps -aq)
           fi
 
