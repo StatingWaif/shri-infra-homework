@@ -43,7 +43,7 @@ jobs:
 
       - name: ssh_login
         run: |
-          ssh -i /tmp/key -o StrictHostKeyChecking=no viktor@51.250.39.75
+          ssh -i /tmp/key -o StrictHostKeyChecking=no viktor@51.250.39.75 << 'EOF'
           sudo docker login --username oauth --password ${{ secrets.YANDEX_CLOUD_TOKEN }} cr.yandex
           sudo docker manifest inspect cr.yandex/crpjke8raekf9lld1bh2/app:${{inputs.version}}_latest
           sudo docker pull cr.yandex/crpjke8raekf9lld1bh2/app:${{inputs.version}}_latest
@@ -51,7 +51,7 @@ jobs:
           sudo docker stop $(sudo docker ps -aq)
           fi
           sudo docker run -d -p 3000:3000 cr.yandex/crpjke8raekf9lld1bh2/app:${{inputs.version}}_latest
-          whoami
+          EOF
 
       # - name: docker_login
       #   run: sudo docker login --username oauth --password ${{ secrets.YANDEX_CLOUD_TOKEN }} cr.yandex
