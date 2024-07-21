@@ -51,6 +51,7 @@ jobs:
           sudo docker stop $(sudo docker ps -aq)
           fi
           sudo docker run -d -p 3000:3000 cr.yandex/crpjke8raekf9lld1bh2/app:${{inputs.version}}_latest
+          whoami
 
       # - name: docker_login
       #   run: sudo docker login --username oauth --password ${{ secrets.YANDEX_CLOUD_TOKEN }} cr.yandex
