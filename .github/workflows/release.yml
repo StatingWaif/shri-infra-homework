@@ -76,7 +76,7 @@ jobs:
 
       - name: create issue
         run: |
-          current_date=$(date -u +'%Y-%m-%dT%H:%M:%SZ')
-          gh issue create --title $'v.${{ github.run_number }}' --body $'date '"$current_date"$'\n author ${{ github.actor }}\n ${{ github.run_number }}\n cr.yandex/crpjke8raekf9lld1bh2/app:${{ github.run_number }}'
+          current_date=$(date -u +'%d.%m.%Y')
+          gh issue create --title $'v.${{ github.run_number }}' --body $'date '"$current_date"$'\n author: ${{ github.actor }}\n version: ${{ github.run_number }}\n link: cr.yandex/crpjke8raekf9lld1bh2/app:${{ github.run_number }}'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
