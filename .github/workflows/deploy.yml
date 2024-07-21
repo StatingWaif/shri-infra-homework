@@ -53,7 +53,8 @@ jobs:
 
       - name: docker_pull
         run: sudo docker pull cr.yandex/crpjke8raekf9lld1bh2/app:${{inputs.version}}_latest
-
+      - name: log
+        run: sudo docker ps
       - name: docker_stop
         # run: sudo docker stop $(sudo docker ps -aq)
         run: |
@@ -63,3 +64,6 @@ jobs:
 
       - name: docker_start
         run: sudo docker run -d -p 3000:3000 cr.yandex/crpjke8raekf9lld1bh2/app:${{inputs.version}}_latest
+
+      - name: log
+        run: sudo docker ps
