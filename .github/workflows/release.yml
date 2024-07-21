@@ -78,13 +78,6 @@ jobs:
         run: |
           current_date=$(date -u +'%d.%m.%Y')
 
-          --body $'date '"$current_date"$'\n
-            author: ${{ github.actor }}\n 
-            version: ${{ github.run_number }}\n
-            link: cr.yandex/crpjke8raekf9lld1bh2/app:${{ github.run_number }}\n
-            commits:\n 
-            "$commits" '
-
           gh issue create \
           --title v.${{ github.run_number }} \
           --body \
