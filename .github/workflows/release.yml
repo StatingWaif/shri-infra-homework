@@ -90,27 +90,3 @@ jobs:
           )"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-  update_changelog:
-    runs-on: ubuntu-latest
-    needs: [lint, test]
-    steps:
-      - name: checkout
-        uses: actions/checkout@v4
-      - name: Update CHANGELOG.md
-        run: |
-          CURRENT_DATE=$(date -u +'%d.%m.%Y')
-          NEW_VERSION="v.${{ github.run_number }}"
-          PREV_TAG=$(git describe --tags --abbrev=0 HEAD^ || echo "")
-          COMMITS=$(git log ${PREV_TAG}..HEAD --oneline --no-merges)
-          # Создаем новый раздел в CHANGELOG.md
-          echo -e "## $NEW_VERSION - $CURRENT_DATE\n\n### Коммиты:\n$COMMITS\n\n$(cat CHANGELOG.md)" > CHANGELOG.md
-
-          # Коммитим и пушим изменения
-          git config user.name "GitHub Actions"
-          git config user.email "github-actions@users.noreply.github.com"
-          git add CHANGELOG.md
-          git commit -m "Обновлен CHANGELOG для версии $NEW_VERSION"
-          git push origin HEAD
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

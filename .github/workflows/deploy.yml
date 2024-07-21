@@ -4,6 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       version:
+        description: "version"
         required: true
 
 jobs:
@@ -26,60 +27,28 @@ jobs:
         run: npm ci
       - name: test
         run: npm run test
-#   release:
-#     runs-on: ubuntu-latest
-#     needs: [lint, test]
-#     steps:
-#       - name: checkout
-#         uses: actions/checkout@v4
-#       - name: create new branch
-#         run: |
-#           git checkout -b releases/${{ github.run_number }}
-#           git push origin releases/${{ github.run_number }}
-#         env:
-#           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-#   docker_build:
-#     runs-on: ubuntu-latest
-#     needs: [lint, test]
-#     steps:
-#       - name: checkout
-#         uses: actions/checkout@v4
-#       - name: login
-#         run: docker login --username oauth --password ${{ secrets.YANDEX_CLOUD_TOKEN }} cr.yandex
-#       - name: build image
-#         run: docker build -t cr.yandex/crpjke8raekf9lld1bh2/app:${{ github.run_number }} -t cr.yandex/crpjke8raekf9lld1bh2/app:${{ github.run_number }}_latest .
+  docker_start:
+    runs-on: ubuntu-latest
+    needs: [lint, test]
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
 
-#       - name: add image to registry
-#         run: docker push --all-tags cr.yandex/crpjke8raekf9lld1bh2/app
+      - name: Set up SSH key
+        run: |
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > /tmp/ssh_key
+          chmod 600 /tmp/ssh_key
 
-#   create_tag:
-#     runs-on: ubuntu-latest
-#     needs: [lint, test]
-#     steps:
-#       - name: checkout
-#         uses: actions/checkout@v4
-#       - name: Set committer identity
-#         run: |
-#           git config user.name "GitHub Actions"
-#           git config user.email "github-actions@users.noreply.github.com"
-#       - name: create new branch
-#         run: |
-#           git tag -a v.${{ github.run_number }} -m v.${{ github.run_number }}
-#           git push origin --tags
-#         env:
-#           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: ssh_login
+        run: ssh -i /tmp/ssh_key viktor@51.250.39.75
 
-#   create_issue:
-#     runs-on: ubuntu-latest
-#     needs: [lint, test]
-#     steps:
-#       - name: checkout
-#         uses: actions/checkout@v4
+      - name: docker_check
+        run: sudo docker manifest inspect cr.yandex/crpjke8raekf9lld1bh2/app:${{inputs.version}}_latest
 
-#       - name: create issue
-#         run: |
-#           current_date=$(date -u +'%Y-%m-%dT%H:%M:%SZ')
-#           gh issue create --title $'v.${{ github.run_number }}' --body $'date '"$current_date"$'\n author ${{ github.actor }}\n ${{ github.run_number }}\n cr.yandex/crpjke8raekf9lld1bh2/app:${{ github.run_number }}'
-#         env:
-#           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        # run: docker login --username oauth --password ${{ secrets.YANDEX_CLOUD_TOKEN }} cr.yandex
+      # - name: build image
+      # run: docker build -t cr.yandex/crpjke8raekf9lld1bh2/app:${{ github.run_number }} -t cr.yandex/crpjke8raekf9lld1bh2/app:${{ github.run_number }}_latest .
+
+      # - name: add image to registry
+      # run: docker push --all-tags cr.yandex/crpjke8raekf9lld1bh2/app
