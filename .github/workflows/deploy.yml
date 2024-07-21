@@ -43,7 +43,6 @@ jobs:
       - name: ssh_login
         run: |
           ssh -i /tmp/ssh_key viktor@51.250.39.75
-          echo ${{secrets.SSH_PASSWORD}}
 
       - name: docker_check
         run: sudo docker manifest inspect cr.yandex/crpjke8raekf9lld1bh2/app:${{inputs.version}}_latest
