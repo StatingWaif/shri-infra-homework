@@ -52,7 +52,7 @@ jobs:
         run: sudo docker manifest inspect cr.yandex/crpjke8raekf9lld1bh2/app:${{inputs.version}}_latest
 
       - name: docker_pull
-        run: sudo docker pull cr.yandex/crpjke8raekf9lld1bh2/app:${{inputs.version}}
+        run: sudo docker pull cr.yandex/crpjke8raekf9lld1bh2/app:${{inputs.version}}_latest
 
       - name: docker_stop
         # run: sudo docker stop $(sudo docker ps -aq)
@@ -62,4 +62,4 @@ jobs:
           fi
 
       - name: docker_start
-        run: sudo docker run -p 3000:3000 cr.yandex/crpjke8raekf9lld1bh2/app:${{inputs.version}}
+        run: sudo docker run -p 3000:3000 cr.yandex/crpjke8raekf9lld1bh2/app:${{inputs.version}}_latest
