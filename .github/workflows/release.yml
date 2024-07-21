@@ -76,8 +76,6 @@ jobs:
 
       - name: create issue
         run: |
-          prev_tag=$(git describe --tags $(git rev-list --tags --skip=1 --max-count=1))
-          commits=$(git log $prev_tag..HEAD --oneline)
           current_date=$(date -u +'%d.%m.%Y')
 
           --body $'date '"$current_date"$'\n
@@ -94,7 +92,6 @@ jobs:
           version: ${{github.run_number}} \n \
           link: cr.yandex/crpjke8raekf9lld1bh2/app:${{ github.run_number }}\n \
           commits: \n \
-          $(commits)
+          $(git describe)
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GH_REPO: ${{github.repository}}
